@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sound Detection Control</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background: #2c3e50; /* Darker background */
+            color: #ecf0f1;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #e67e22; /* Orange color */
+            font-size: 32px;
+            margin-bottom: 20px; /* Adjusted margin */
+        }
+
+        .card {
+            background: #34495e; /* Dark background */
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            box-sizing: border-box;
+            text-align: left;
+            transition: transform 0.3s ease;
+            display: inline-block; /* Adjusted for card layout */
+        }
+
+        p {
+            color: #2ecc71; /* Green color */
+            font-weight: bold;
+        }
+
+        a.btn {
+            display: inline-block;
+            padding: 10px 15px;
+            text-decoration: none;
+            margin: 10px;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-size: 16px;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-success {
+            background-color: #2ecc71; /* Green color */
+        }
+
+        .btn-danger {
+            background-color: #e74c3c; /* Red color */
+        }
+
+        .btn:hover {
+            background-color: #2980b9; /* Darker blue on hover */
+            transform: scale(1.05);
+        }
+
+        a.goBack {
+            display: block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #3498db;
+            font-size: 18px;
+        }
+
+        .logs {
+            font-size: 24px; /* Adjust the font size for logs heading */
+            color: #e67e22; /* Orange color */
+            margin-top: 20px; /* Add margin between logs and buttons */
+        }
+
+        .logs-text {
+            font-size: 15px; /* Adjust the font size for logs text */
+            white-space: pre-line; /* Preserve white spaces and wrap text */
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Sound Detection Control</h1>
+
+    <div class="card">
+        <p class="status">Sound Detection Status: {% if decibel_detection %}Enabled{% else %}Disabled{% endif %}</p>
+        <div class="nested-card">
+            <a href="/start_decibel_detection" class="btn btn-success" data-tooltip="Start Sound Detection"><i
+                    class="fas fa-play"></i> Start Detection</a>
+            <a href="/stop_decibel_detection" class="btn btn-danger" data-tooltip="Stop Sound Detection"><i
+                    class="fas fa-stop"></i> Stop Detection</a>
+            <a href="/clearDecibelLogs" class="btn btn-danger"><i class="fas fa-trash"></i> Clear Logs</a>
+        </div>
+    </div>
+
+    <a href="/" class="goBack">Go Back</a>
+
+    <h1 class="logs">Logs</h1>
+    <p class="logs-text">{{ logs_text }}</p>
+
+</body>
+
+</html>

@@ -1,0 +1,12 @@
+{
+  "loud_sound_threshold": 0.03,
+  "really_loud_sound_threshold": 0.3,
+  "sound_detection_cooldown": 30.0,
+  "motion_detection_email_cooldown": 60.0,
+  "motion_detection_cooldown": 30.0,
+  "captures_dir": "/Users/sreekarpalla/IdeaProjects/DormSecurity/Captures/",
+  "logs_dir": "/Users/sreekarpalla/IdeaProjects/DormSecurity/Logs/",
+  "recordings_dir": "/Users/sreekarpalla/IdeaProjects/DormSecurity/Recordings/",
+  "email_password": "uktp-igck-lddv-ychu",
+  "port": 8080
+}

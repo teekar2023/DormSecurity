@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alarm System Control</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background: #2c3e50; /* Darker background */
+            color: #ecf0f1;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #e67e22; /* Orange color */
+            font-size: 32px;
+            margin-bottom: 20px; /* Adjusted margin */
+        }
+
+        .card {
+            background: #34495e; /* Dark background */
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            box-sizing: border-box;
+            text-align: left;
+            transition: transform 0.3s ease;
+            display: inline-block; /* Adjusted for card layout */
+        }
+
+        .nested-card {
+            width: calc(100% - 40px);
+            margin-top: 15px;
+            padding: 15px;
+            background: #2c3e50; /* Darker background */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            box-sizing: border-box;
+        }
+
+        p {
+            color: #2ecc71; /* Green color */
+            font-weight: bold;
+        }
+
+        a.btn {
+            display: inline-block;
+            padding: 10px 15px;
+            text-decoration: none;
+            margin: 10px;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-size: 16px;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-success {
+            background-color: #2ecc71; /* Green color */
+        }
+
+        .btn-danger {
+            background-color: #e74c3c; /* Red color */
+        }
+
+        .btn:hover {
+            background-color: #2980b9; /* Darker blue on hover */
+            transform: scale(1.05);
+        }
+
+        a.goBack {
+            display: block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #3498db;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Alarm System Control</h1>
+
+    <div class="card">
+        <p class="status">Alarm System Status: {% if alarm_system_on %}Triggered{% else %}Disabled{% endif %}</p>
+        <div class="nested-card">
+            <a href="/activate_alarm" class="btn btn-success" data-tooltip="Trigger Alarm"><i
+                    class="fas fa-exclamation-triangle"></i> Trigger Alarm</a>
+            <a href="/deactivate_alarm" class="btn btn-danger" data-tooltip="Deactivate Alarm"><i
+                    class="fas fa-times-circle"></i> Deactivate Alarm</a>
+        </div>
+    </div>
+
+    <a href="/" class="goBack">Go Back</a>
+
+</body>
+
+</html>
