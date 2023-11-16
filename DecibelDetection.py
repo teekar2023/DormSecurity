@@ -60,13 +60,9 @@ def callback(indata, frames, t, status):
     else:
         pass
 
-    if time.time() - last_detection >= sound_detection_cooldown:
-        last_detection = time.time()
-        pass
-    else:
-        return
-    if np.max(np.abs(indata)) >= 0.80:
+    if np.max(np.abs(indata)) >= 0.80 and time.time() - last_detection >= sound_detection_cooldown:
         timestamp = time.time()
+        last_detection = time.time()
         dt_object = datetime.fromtimestamp(timestamp)
         formatted_time = dt_object.strftime('%Y-%m-%d %H:%M:%S')
         print(f"Extremely Loud Sound Detected: {formatted_time}")
@@ -78,8 +74,9 @@ def callback(indata, frames, t, status):
                    f"An extremely loud noise was detected at {formatted_time}. Check the attached audio recording to hear it.",
                    audio_file_path)
         pass
-    elif np.max(np.abs(indata)) >= really_loud_sound_threshold:
+    elif np.max(np.abs(indata)) >= really_loud_sound_threshold and time.time() - last_detection >= sound_detection_cooldown:
         timestamp = time.time()
+        last_detection = time.time()
         dt_object = datetime.fromtimestamp(timestamp)
         formatted_time = dt_object.strftime('%Y-%m-%d %H:%M:%S')
         print(f"Really Loud Sound Detected: {formatted_time}")
@@ -91,8 +88,9 @@ def callback(indata, frames, t, status):
                    f"A really loud noise was detected at {formatted_time}. Check the attached audio recording to hear it.",
                    audio_file_path)
         pass
-    elif np.max(np.abs(indata)) >= loud_sound_threshold:
+    elif np.max(np.abs(indata)) >= loud_sound_threshold and time.time() - last_detection >= sound_detection_cooldown:
         timestamp = time.time()
+        last_detection = time.time()
         dt_object = datetime.fromtimestamp(timestamp)
         formatted_time = dt_object.strftime('%Y-%m-%d %H:%M:%S')
         print(f"Sound Detected: {formatted_time}")
@@ -102,6 +100,7 @@ def callback(indata, frames, t, status):
         pass
     else:
         pass
+    return
 
 
 with sd.InputStream(callback=callback, channels=1, samplerate=SAMPLE_RATE):
