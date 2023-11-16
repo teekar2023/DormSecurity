@@ -6,13 +6,14 @@ from datetime import datetime
 
 
 def on_motion_detected():
-    global last_detection
+    global last_detection, last_email
     if last_detection is None:
         last_detection = time.time()
+        last_email = time.time()
         return
-    elif time.time() - float(last_detection) >= motion_detection_email_cooldown and time.time() - float(
-            last_detection) >= motion_detection_cooldown:
+    elif time.time() - float(last_email) >= motion_detection_email_cooldown and time.time() - float(last_detection) >= motion_detection_cooldown:
         last_detection = time.time()
+        last_email = time.time()
         dt_object = datetime.fromtimestamp(last_detection)
         formatted_time = dt_object.strftime('%Y-%m-%d %H:%M:%S')
         print("Motion detected: " + str(formatted_time))
@@ -52,6 +53,7 @@ frame1_blurred = cv2.GaussianBlur(frame1_gray, (25, 25), 0)
 
 motion_detected = False
 last_detection = None
+last_email = None
 
 while True:
     time.sleep(1)

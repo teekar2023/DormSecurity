@@ -6,58 +6,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dorm Security</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Poppins', sans-serif;
             text-align: center;
-            background: #2c3e50; /* Darker background */
-            color: #ecf0f1;
+            background: #1d1d1d; /* Darker background */
+            color: #f0f0f0;
             margin: 0;
-            padding: 10px;
-            padding-top: 50px;
+            padding: 20px;
         }
 
-        .navbar {
-            background: #34495e; /* Darker grayish background */
-            padding: 10px;
-            display: flex;
-            justify-content: space-around;
-            border-radius: 8px;
+        header {
+            background: #282828; /* Darker grayish background */
+            padding: 20px;
+            border-radius: 0 0 20px 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             margin-bottom: 20px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: calc(100% - 20px);
-            z-index: 1000;
         }
 
-        .navbar a {
+        nav {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        nav a {
             text-decoration: none;
-            color: #ecf0f1;
+            color: #f0f0f0;
             font-size: 18px;
             transition: color 0.3s ease;
         }
 
-        .navbar a:hover {
+        nav a:hover {
             color: #3498db; /* Blue color on hover */
         }
 
         h1 {
             color: #3498db; /* Blue color */
-            margin-bottom: 15px;
-            font-size: 32px;
+            margin-bottom: 20px;
+            font-size: 36px;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
         }
 
         .card {
-            background: #34495e; /* Dark background */
-            padding: 20px;
+            background: #333; /* Dark background */
+            padding: 10px;
             border-radius: 8px;
-            margin-top: 20px;
+            margin: 15px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            width: 100%;
+            width: 85%;
             box-sizing: border-box;
-            text-align: left;
+            text-align: center;
             transition: transform 0.3s ease;
         }
 
@@ -65,18 +70,7 @@
             transform: scale(1.02); /* Slight zoom on hover */
         }
 
-        .nested-card {
-            width: calc(100% - 40px);
-            margin-top: 15px;
-            padding: 15px;
-            background: #2c3e50; /* Darker background */
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            box-sizing: border-box;
-        }
-
-        h2,
-        h3 {
+        h2, h3 {
             margin-top: 15px;
             color: #95a5a6; /* Grayish color */
             font-size: 24px;
@@ -89,7 +83,7 @@
 
         .btn {
             display: inline-block;
-            padding: 10px 15px;
+            padding: 10px 10px;
             text-decoration: none;
             margin: 5px;
             color: #ffffff;
@@ -97,7 +91,7 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.2s ease;
-            font-size: 16px;
+            font-size: 18px;
             position: relative;
             background-color: #3498db; /* Blue color */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -129,226 +123,136 @@
             color: #bdc3c7; /* Light grayish color */
         }
 
-        .accordion {
-            background: #e67e22; /* Orange color */
-            color: #ffffff;
-            cursor: pointer;
-            padding: 18px;
-            width: 100%;
-            text-align: left;
-            border: none;
-            outline: none;
-            font-size: 20px;
-            transition: 0.5s;
-            border-radius: 8px;
-            margin-top: 15px;
-            border: 2px solid #e67e22;
-            box-sizing: border-box;
+        @media only screen and (max-width: 900px) {
+            .card {
+                width: 90%;
+            }
         }
-
-        .active,
-        .accordion:hover {
-            background: #d35400; /* Darker orange on hover/active */
-        }
-
-        .panel {
-            padding: 0 18px;
-            display: none;
-            background: #d35400; /* Darker orange for the panel */
-            overflow: hidden;
-            border-radius: 8px;
-            box-sizing: border-box;
-        }
-
-        .panel a {
-            display: block;
-            padding: 10px 15px;
-            text-decoration: none;
-            margin: 5px;
-            color: #ffffff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-size: 16px;
-            background-color: #2c3e50; /* Darker background */
-            box-sizing: border-box;
-        }
-
-        .panel a:hover {
-            background-color: #2980b9; /* Darker blue on hover */
-        }
-
-        .tooltip {
-            position: absolute;
-            display: none;
-            background-color: #2c3e50; /* Darker background */
-            color: #ffffff;
-            padding: 8px;
-            border-radius: 5px;
-            font-size: 14px;
-            z-index: 1;
-        }
-
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #3498db; /* Blue color */
-            color: #fff;
-            padding: 15px;
-            border-radius: 5px;
-            display: none;
-            z-index: 1000;
-        }
-
 
         @media only screen and (max-width: 600px) {
-            h1 {
-                font-size: 24px;
-            }
-
-            h2,
-            h3 {
-                margin-top: 10px;
-                font-size: 20px;
-            }
-
-            p {
-                font-size: 14px;
-            }
-
-            .btn {
-                padding: 10px 15px;
-                font-size: 14px;
-            }
-
             .card {
-                width: calc(100% - 0px);
-            }
-
-            .nested-card {
-                width: calc(100% - 0px);
+                width: 90%;
             }
         }
     </style>
 </head>
 
 <body>
-<div class="navbar">
-    <a href="#detection-services">Security</a>
-    <a href="#other-services">Other</a>
-    <a href="#contacts">Contact</a>
-    <a href="#settings">Server</a>
-</div>
+    <header>
+        <h1>Dorm Security</h1>
+        <nav>
+            <a href="#detection-services">Security</a>
+            <a href="#other-services">Other</a>
+            <a href="#contacts">Contact</a>
+            <a href="#settings">Server</a>
+        </nav>
+    </header>
 
-<div id="toastNotification" class="toast"></div>
+    <div class="card-container">
+        <div id="detection-services" class="card">
+            <h2>Security</h2>
 
-<h1>Dorm Security</h1>
+            <div class="card" onclick="redirectTo('/viewMotionLogs')">
+                <h3>Motion Detection</h3>
+                <p class="status">Status: {% if motion_detected %}Enabled{% else %}Disabled{% endif %}</p>
+                <div>
+                    <a href="/start_motion_detection" class="btn btn-success" data-tooltip="Start Motion Detection"><i
+                            class="fas fa-play"></i> Start</a>
+                    <a href="/stop_motion_detection" class="btn btn-danger" data-tooltip="Stop Motion Detection"><i
+                            class="fas fa-stop"></i> Stop</a>
+                </div>
+            </div>
 
-<div id="detection-services" class="card">
-    <h2>Security</h2>
+            <div class="card" onclick="redirectTo('/viewDecibelLogs')">
+                <h3>Sound Detection</h3>
+                <p class="status">Status: {% if decibel_detection %}Enabled{% else %}Disabled{% endif %}</p>
+                <div>
+                    <a href="/start_decibel_detection" class="btn btn-success" data-tooltip="Start Sound Detection"><i
+                            class="fas fa-play"></i> Start</a>
+                    <a href="/stop_decibel_detection" class="btn btn-danger" data-tooltip="Stop Sound Detection"><i
+                            class="fas fa-stop"></i> Stop</a>
+                </div>
+            </div>
 
-    <div class="card nested-card" onclick="redirectTo('/viewMotionLogs')">
-        <h3>Motion Detection</h3>
-        <p class="status">Status: {% if motion_detected %}Enabled{% else %}Disabled{% endif %}</p>
-        <div>
-            <a href="/start_motion_detection" class="btn btn-success" data-tooltip="Start Motion Detection"><i
-                    class="fas fa-play"></i> Start</a>
-            <a href="/stop_motion_detection" class="btn btn-danger" data-tooltip="Stop Motion Detection"><i
-                    class="fas fa-stop"></i> Stop</a>
+            <div class="card">
+                <h3>Master Control</h3>
+                <div>
+                    <a href="/startAllSystems" class="btn btn-success" data-tooltip="Start All Systems"><i
+                            class="fas fa-play"></i> Start All</a>
+                    <a href="/stopAllSystems" class="btn btn-danger" data-tooltip="Stop All Systems"><i
+                            class="fas fa-stop"></i> Stop All</a>
+                </div>
+            </div>
+        </div>
+
+        <div id="other-services" class="card">
+            <h2>Other</h2>
+
+            <div class="card" onclick="redirectTo('/viewAlarmPage')">
+                <h3>Emergency Alarm</h3>
+                <p class="status">Status: {% if alarm_system_on %}Enabled{% else %}Disabled{% endif %}</p>
+                <a id="alarmTrigger" class="btn btn-success" data-tooltip="Trigger Alarm"><i
+                        class="fas fa-exclamation-triangle"></i> Trigger</a>
+                <a href="/deactivate_alarm" class="btn btn-danger" data-tooltip="Deactivate Alarm"><i
+                        class="fas fa-times-circle"></i> Deactivate</a>
+            </div>
+
+            <div class="card" onclick="redirectTo('/viewVideoRecordings')">
+                <h3>Record Video</h3>
+                <p class="status">Status: {% if recording_video %}Recording{% else %}Not Recording{% endif %}</p>
+                <a id="startRecording" class="btn btn-success" data-tooltip="Start Recording"><i
+                        class="fas fa-circle"></i> Record</a>
+                <a href="/stopRecording" class="btn btn-danger" data-tooltip="Stop Recording"><i
+                        class="fas fa-square"></i> Stop</a>
+            </div>
+
+            <div class="card">
+                <h3>Remote Access</h3>
+                <a href="/monitorCamera" class="btn btn-primary" data-tooltip="Webcam Access"><i
+                        class="fas fa-video"></i> Webcam Access</a>
+                <a href="/remoteDesktop" class="btn btn-primary" data-tooltip="Desktop Access"><i
+                        class="fas fa-desktop"></i> Desktop Access</a>
+            </div>
+        </div>
+
+        <div id="contacts" class="card">
+            <h2>Contacts</h2>
+
+            <div class="card">
+                <h3>Residence Life</h3>
+                <p>Select a campus</p>
+                <a href="tel:+18484452561" class="btn btn-primary" data-tooltip="Call Busch Residence Life"><i
+                        class="fas fa-phone"></i> Busch</a>
+                <a href="tel:+18484454086" class="btn btn-primary" data-tooltip="Call Livingston Residence Life"><i
+                        class="fas fa-phone"></i> Livingston</a>
+                <a href="tel:+18489327209" class="btn btn-primary" data-tooltip="Call College Ave Residence Life"><i
+                        class="fas fa-phone"></i> College Avenue</a>
+                <a href="tel:+18489329363" class="btn btn-primary" data-tooltip="Call Cook/Doug Residence Life"><i
+                        class="fas fa-phone"></i> Cook/Douglass</a>
+            </div>
+
+            <div class="card">
+                <h3>Emergency Services</h3>
+                <p>Select a department</p>
+                <a href="tel:+17329327211" class="btn btn-primary" data-tooltip="Call Police"><i
+                        class="fas fa-phone"></i> Police</a>
+                <a href="tel:+18489324800" class="btn btn-primary" data-tooltip="Call Medical"><i
+                        class="fas fa-phone"></i> EMS</a>
+            </div>
+        </div>
+
+        <div id="settings" class="card">
+            <h2>Server</h2>
+
+            <p>Battery Level: {{ battery_percent }}%</p>
+            <a href="/settings" class="btn btn-primary" data-tooltip="System Settings"><i class="fas fa-cogs"></i>
+                Settings</a>
+            <a id="shutdownServer" class="btn btn-danger" data-tooltip="Shutdown Server"><i
+                    class="fas fa-power-off"></i> Shutdown</a>
+            <a id="restartServer" class="btn btn-warning" data-tooltip="Restart Server"><i class="fas fa-sync"></i>
+                Restart</a>
         </div>
     </div>
-
-    <div class="card nested-card" onclick="redirectTo('/viewDecibelLogs')">
-        <h3>Sound Detection</h3>
-        <p class="status">Status: {% if decibel_detection %}Enabled{% else %}Disabled{% endif %}</p>
-        <div>
-            <a href="/start_decibel_detection" class="btn btn-success" data-tooltip="Start Sound Detection"><i
-                    class="fas fa-play"></i> Start</a>
-            <a href="/stop_decibel_detection" class="btn btn-danger" data-tooltip="Stop Sound Detection"><i
-                    class="fas fa-stop"></i> Stop</a>
-        </div>
-    </div>
-
-    <div class="card nested-card">
-        <h3>Master Control</h3>
-        <div>
-            <a href="/startAllSystems" class="btn btn-success" data-tooltip="Start All Systems"><i
-                    class="fas fa-play"></i> Start All</a>
-            <a href="/stopAllSystems" class="btn btn-danger" data-tooltip="Stop All Systems"><i
-                    class="fas fa-stop"></i> Stop All</a>
-        </div>
-    </div>
-</div>
-
-<div id="other-services" class="card">
-    <h2>Other</h2>
-
-    <div class="card nested-card" onclick="redirectTo('/viewAlarmPage')">
-        <h3>Emergency Alarm</h3>
-        <p class="status">Status: {% if alarm_system_on %}Enabled{% else %}Disabled{% endif %}</p>
-        <a id="alarmTrigger" class="btn btn-success" data-tooltip="Trigger Alarm"><i
-                class="fas fa-exclamation-triangle"></i> Trigger</a>
-        <a href="/deactivate_alarm" class="btn btn-danger" data-tooltip="Deactivate Alarm"><i
-                class="fas fa-times-circle"></i> Deactivate</a>
-    </div>
-
-    <div class="card nested-card" onclick="redirectTo('/viewVideoRecordings')">
-        <h3>Record Video</h3>
-        <p class="status">Status: {% if recording_video %}Recording{% else %}Not Recording{% endif %}</p>
-        <a id="startRecording" class="btn btn-success" data-tooltip="Start Recording"><i
-                class="fas fa-circle"></i> Record</a>
-        <a href="/stopRecording" class="btn btn-danger" data-tooltip="Stop Recording"><i
-                class="fas fa-square"></i> Stop</a>
-    </div>
-
-    <div class="card nested-card">
-        <h3>Remote Access</h3>
-        <a href="/monitorCamera" class="btn btn-primary" data-tooltip="Webcam Access"><i
-                class="fas fa-video"></i> Webcam Access</a>
-        <a href="/remoteDesktop" class="btn btn-primary" data-tooltip="Desktop Access"><i
-                class="fas fa-desktop"></i> Desktop Access</a>
-    </div>
-</div>
-
-<div id="contacts" class="card">
-    <h2>Contacts</h2>
-
-    <div class="card nested-card">
-        <h3>Residence Life</h3>
-        <p>Select a campus</p>
-        <a href="tel:+18484452561" class="btn btn-primary" data-tooltip="Call Busch Residence Life"><i
-                class="fas fa-phone"></i> Busch</a>
-        <a href="tel:+18484454086" class="btn btn-primary" data-tooltip="Call Livingston Residence Life"><i
-                class="fas fa-phone"></i> Livingston</a>
-        <a href="tel:+18489327209" class="btn btn-primary" data-tooltip="Call College Ave Residence Life"><i
-                class="fas fa-phone"></i> College Avenue</a>
-        <a href="tel:+18489329363" class="btn btn-primary" data-tooltip="Call Cook/Doug Residence Life"><i
-                class="fas fa-phone"></i> Cook/Douglass</a>
-    </div>
-
-    <div class="card nested-card">
-        <h3>Emergency Services</h3>
-        <p>Select a department</p>
-        <a href="tel:+17329327211" class="btn btn-primary" data-tooltip="Call Police"><i class="fas fa-phone"></i>
-            Rutgers Police Department</a>
-        <a href="tel:+18489324800" class="btn btn-primary" data-tooltip="Call Medical"><i
-                class="fas fa-phone"></i> Rutgers Emergency Medical Services</a>
-    </div>
-</div>
-
-<div id="settings" class="card">
-    <h2>Server</h2>
-
-    <p>Battery Level: {{ battery_percent }}%</p>
-    <a href="/settings" class="btn btn-primary" data-tooltip="System Settings"><i class="fas fa-cogs"></i> Settings</a>
-    <a id="shutdownServer" class="btn btn-danger" data-tooltip="Shutdown Server"><i
-            class="fas fa-power-off"></i> Shutdown</a>
-    <a id="restartServer" class="btn btn-warning" data-tooltip="Restart Server"><i class="fas fa-sync"></i>
-        Restart</a>
-</div>
 
 <script>
     function redirectTo(href) {
@@ -373,21 +277,6 @@
     var notificationMessage = getQueryParam('notification_message');
     if (notificationMessage) {
         showToast(notificationMessage);
-    }
-
-    var acc = document.getElementsByClassName("accordion");
-    var i;
-
-    for (i = 0; i < acc.length; i++) {
-        acc[i].addEventListener("click", function () {
-            this.classList.toggle("active");
-            var panel = this.nextElementSibling;
-            if (panel.style.display === "block") {
-                panel.style.display = "none";
-            } else {
-                panel.style.display = "block";
-            }
-        });
     }
 
     var tooltips = document.querySelectorAll('.btn');
@@ -436,7 +325,6 @@
         }
     });
 
-    // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();

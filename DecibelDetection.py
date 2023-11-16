@@ -22,7 +22,7 @@ cap_dir = settings["captures_dir"]
 email_password = settings["email_password"]
 log_file_path = f"{logs_dir}DecibelLogs.txt"
 audio_file_path = f"{cap_dir}loud_sound_recording.wav"
-last_detection = 0.0
+last_detection = None
 
 
 def send_email(subject, body, attachment_path):
@@ -54,6 +54,12 @@ def callback(indata, frames, t, status):
     global last_detection
     log_file = open(log_file_path, "r+")
     current_logs = log_file.read()
+    if last_detection is None:
+        last_detection = float(time.time())
+        pass
+    else:
+        pass
+
     if time.time() - last_detection >= sound_detection_cooldown:
         last_detection = time.time()
         pass
