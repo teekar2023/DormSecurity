@@ -198,12 +198,16 @@ def settings_page():
     recordings_dir = settings["recordings_dir"]
     email_password = settings["email_password"]
     port = settings["port"]
+    num_of_pics = settings["num_of_pics"]
+    recording_fps = settings["recording_fps"]
+    recording_resolution = settings["recording_resolution"]
     return render_template("settings.html", loud_sound_threshold=loud_sound_threshold,
                            really_loud_sound_threshold=really_loud_sound_threshold,
                            motion_detection_email_cooldown=motion_detection_email_cooldown,
                            sound_detection_cooldown=sound_detection_cooldown,
                            motion_detection_cooldown=motion_detection_cooldown, captures_path=captures_dir,
-                           logs_path=logs_dir, recordings_path=recordings_dir, email_password=email_password, port=port)
+                           logs_path=logs_dir, recordings_path=recordings_dir, email_password=email_password, port=port,
+                           num_of_pics=num_of_pics, recording_fps=recording_fps, recording_resolution=recording_resolution)
 
 
 @app.route('/saveSettings', methods=['POST'])
@@ -220,6 +224,9 @@ def save_new_settings():
         recordings_dir = str(request.form['recordingsPath'])
         email_password = str(request.form['emailPassword'])
         port = int(request.form['port'])
+        num_of_pics = int(request.form['numOfPics'])
+        recording_fps = int(request.form['recordingFPS'])
+        recording_resolution = int(request.form['recordingResolution'])
         data = {
             "loud_sound_threshold": loud_sound_threshold,
             "really_loud_sound_threshold": really_loud_sound_threshold,
@@ -230,7 +237,10 @@ def save_new_settings():
             "logs_dir": logs_dir,
             "recordings_dir": recordings_dir,
             "email_password": email_password,
-            "port": port
+            "port": port,
+            "num_of_pics": num_of_pics,
+            "recording_fps": recording_fps,
+            "recording_resolution": recording_resolution
         }
         with open("/Users/sreekarpalla/IdeaProjects/DormSecurity/Settings/settings.json", "w") as f:
             json.dump(data, f)

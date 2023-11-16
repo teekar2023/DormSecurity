@@ -21,6 +21,7 @@ def capture_and_save_image(file_path):
 settings = json.load(open("/Users/sreekarpalla/IdeaProjects/DormSecurity/Settings/settings.json"))
 cap_dir = settings["captures_dir"]
 email_password = settings["email_password"]
+num_of_pics = settings["num_of_pics"]
 sender_email = "sree23palla@icloud.com"
 recipient_email = "sree23palla@gmail.com"
 subject = "Security System Alert"
@@ -30,19 +31,14 @@ msg["From"] = sender_email
 msg["To"] = recipient_email
 msg["Subject"] = subject
 msg.attach(MIMEText(body, "plain"))
-image_file = capture_and_save_image("captured_image.jpg")
-if image_file:
-    with open(image_file, "rb") as image_data:
-        image = MIMEImage(image_data.read())
-        image.add_header("Content-Disposition", f"attachment; filename={image_file}")
-        msg.attach(image)
-time.sleep(2)
-image_file_two = capture_and_save_image("captured_image2.jpg")
-if image_file_two:
-    with open(image_file_two, "rb") as image_data:
-        image = MIMEImage(image_data.read())
-        image.add_header("Content-Disposition", f"attachment; filename={image_file_two}")
-        msg.attach(image)
+for pic in range(num_of_pics):
+    image_file = capture_and_save_image(f"captured_image{pic}.jpg")
+    if image_file:
+        with open(image_file, "rb") as image_data:
+            image = MIMEImage(image_data.read())
+            image.add_header("Content-Disposition", f"attachment; filename={image_file}")
+            msg.attach(image)
+    time.sleep(1)
 smtp_server = "smtp.mail.me.com"
 smtp_port = 587
 try:

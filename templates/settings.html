@@ -87,11 +87,9 @@
 
     <h1>System Settings</h1>
 
-    <a href="/" class="goBack">Go Back</a>
-
     <form action="/saveSettings" method="post">
         <div class="card">
-            <p>Sound Detection Settings</p>
+            <p>Sound Detection</p>
             <label for="loudSoundThreshold">Loud Sound Threshold:</label>
             <input type="number-float" id="loudSoundThreshold" name="loudSoundThreshold" value="{{ loud_sound_threshold }}">
 
@@ -105,7 +103,7 @@
         </div>
 
         <div class="card">
-            <p>Motion Detection Settings</p>
+            <p>Motion Detection</p>
             <label for="motionDetectionEmailCooldown">Notification Cooldown:</label>
             <input type="number-float" id="motionDetectionEmailCooldown" name="motionDetectionEmailCooldown"
                 value="{{ motion_detection_email_cooldown }}">
@@ -113,6 +111,21 @@
             <label for="motionDetectionCooldown">Detection Cooldown:</label>
             <input type="number-float" id="motionDetectionCooldown" name="motionDetectionCooldown"
                 value="{{ motion_detection_cooldown }}">
+
+            <label for="numOfPics">Pictures To Email:</label>
+            <input type="number" id="numOfPics" name="numOfPics"
+                value="{{ num_of_pics }}">
+        </div>
+
+        <div class="card">
+            <p>Recording</p>
+            <label for="recordingFPS">FPS:</label>
+            <input type="number" id="recordingFPS" name="recordingFPS"
+                value="{{ recording_fps }}">
+
+            <label for="recordingResolution">Resolution:</label>
+            <input type="number" id="recordingResolution" name="recordingResolution"
+                value="{{ recording_resolution }}">
         </div>
 
         <div class="card">
@@ -123,7 +136,7 @@
             <label for="logsPath">Logs Directory:</label>
             <input type="text" id="logsPath" name="logsPath" value="{{ logs_path }}">
 
-            <label for="recordingsPath">Recording Directory:</label>
+            <label for="recordingsPath">Recordings Directory:</label>
             <input type="text" id="recordingsPath" name="recordingsPath" value="{{ recordings_path }}">
         </div>
 
@@ -136,8 +149,10 @@
             <input type="text" id="emailPassword" name="emailPassword" value="{{ email_password }}">
         </div>
 
-        <button type="submit">Save Settings</button>
+        <button type="submit">Save</button>
     </form>
+
+    <a href="/" class="goBack">Cancel</a>
 
 </body>
 
