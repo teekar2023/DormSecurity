@@ -55,20 +55,21 @@
         }
 
         .card {
-            background: #333; /* Dark background */
-            padding: 10px;
-            border-radius: 8px;
+            background: #444; /* Darker background */
+            padding: 20px;
+            border-radius: 10px;
             margin: 15px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            width: 85%;
+            width: 300px;
             box-sizing: border-box;
             text-align: center;
             transition: transform 0.3s ease;
         }
 
         .card:hover {
-            transform: scale(1.02); /* Slight zoom on hover */
+            transform: scale(1.05); /* Slight zoom on hover */
         }
+
 
         h2, h3 {
             margin-top: 15px;
@@ -83,7 +84,7 @@
 
         .btn {
             display: inline-block;
-            padding: 10px 10px;
+            padding: 10px 15px;
             text-decoration: none;
             margin: 5px;
             color: #ffffff;
@@ -95,10 +96,6 @@
             position: relative;
             background-color: #3498db; /* Blue color */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .btn i {
-            margin-right: 5px;
         }
 
         .btn-success {
@@ -141,12 +138,13 @@
     <header>
         <h1>Dorm Security</h1>
         <nav>
-            <a href="#detection-services">Security</a>
-            <a href="#other-services">Other</a>
-            <a href="#contacts">Contact</a>
-            <a href="#settings">Server</a>
-        </nav>
+            <a href="#detection-services"><i class="fas fa-shield"></i> Security</a>
+            <a href="#other-services"><i class="fas fa-cogs"></i> Other</a>
+            <a href="#contacts"><i class="fas fa-address-book"></i> Contacts</a>
+            <a href="#settings"><i class="fas fa-server"></i> Server</a>
+     </nav>
     </header>
+
 
     <div class="card-container">
         <div id="detection-services" class="card">
