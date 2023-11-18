@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, Response
+from flask import Flask, render_template, request, redirect, url_for, Response, session
 from subprocess import Popen
 import socket
 import pyperclip
@@ -10,21 +10,18 @@ import psutil
 import json
 
 app = Flask(__name__)
+app.secret_key = os.urandom(24)  # Generate a random secret key for session encryption
 
-motion_detection = False
-motion_detection_process = None
-decibel_detection = False
-decibel_detection_process = None
-alarm_system_on = False
-alarm_system_process = None
-recording_process = None
-recording = False
-notification = ""
-
-settings_file_json = open("/Users/sreekarpalla/IdeaProjects/DormSecurity/Settings/settings.json", "r")
-settings_json = json.load(settings_file_json)
+settings_file = open("/Users/sreekarpalla/IdeaProjects/DormSecurity/Settings/settings.json", "r")
+settings_json = json.load(settings_file)
 log_path = settings_json["logs_dir"]
 server_port = settings_json["port"]
+
+motion_detection = False
+decibel_detection = False
+alarm_system_on = False
+recording = False
+notification = ""
 
 
 def get_battery_percent():
@@ -35,9 +32,30 @@ def get_battery_percent():
 
 @app.route('/')
 def index():
-    return render_template('index.html', motion_detected=motion_detection, decibel_detection=decibel_detection,
-                           alarm_system_on=alarm_system_on, battery_percent=get_battery_percent(),
-                           notifcation_message=notification, recording_video=recording)
+    if 'authenticated' in session and session['authenticated']:
+        return render_template('index.html', motion_detected=motion_detection, decibel_detection=decibel_detection,
+                               alarm_system_on=alarm_system_on, battery_percent=get_battery_percent(),
+                               notifcation_message=notification, recording_video=recording)
+    else:
+        return render_template("login.html")
+
+
+@app.route('/login', methods=['POST', 'GET'])
+def login():
+    if request.method == 'POST':
+        password_attempt = request.form.get('systemPassword')
+        if password_attempt == settings_json["system_password"]:
+            session['authenticated'] = True
+            return redirect(url_for("index"))
+
+    session['authenticated'] = False
+    return render_template("login.html")
+
+
+@app.route('/logout')
+def logout():
+    session.pop('authenticated', None)
+    return redirect(url_for('index'))
 
 
 @app.route('/start_motion_detection')
@@ -151,7 +169,7 @@ def activate_alarm():
     try:
         subprocess.run(["osascript", "-e", "set volume output volume 100"])
         alarm_system_process = Popen(['/Users/sreekarpalla/IdeaProjects/DormSecurity/venv/bin/python',
-                                        '/Users/sreekarpalla/IdeaProjects/DormSecurity/AlarmSystem.py'])
+                                      '/Users/sreekarpalla/IdeaProjects/DormSecurity/AlarmSystem.py'])
         alarm_system_on = True
         return render_template("alarmSystem.html", alarm_system_on=alarm_system_on)
     except Exception as e:
@@ -199,15 +217,14 @@ def settings_page():
     email_password = settings["email_password"]
     port = settings["port"]
     num_of_pics = settings["num_of_pics"]
-    recording_fps = settings["recording_fps"]
-    recording_resolution = settings["recording_resolution"]
+    system_password = settings["system_password"]
     return render_template("settings.html", loud_sound_threshold=loud_sound_threshold,
                            really_loud_sound_threshold=really_loud_sound_threshold,
                            motion_detection_email_cooldown=motion_detection_email_cooldown,
                            sound_detection_cooldown=sound_detection_cooldown,
                            motion_detection_cooldown=motion_detection_cooldown, captures_path=captures_dir,
                            logs_path=logs_dir, recordings_path=recordings_dir, email_password=email_password, port=port,
-                           num_of_pics=num_of_pics, recording_fps=recording_fps, recording_resolution=recording_resolution)
+                           num_of_pics=num_of_pics, system_password=system_password)
 
 
 @app.route('/saveSettings', methods=['POST'])
@@ -225,8 +242,7 @@ def save_new_settings():
         email_password = str(request.form['emailPassword'])
         port = int(request.form['port'])
         num_of_pics = int(request.form['numOfPics'])
-        recording_fps = int(request.form['recordingFPS'])
-        recording_resolution = int(request.form['recordingResolution'])
+        system_password = str(request.form['systemPassword'])
         data = {
             "loud_sound_threshold": loud_sound_threshold,
             "really_loud_sound_threshold": really_loud_sound_threshold,
@@ -239,11 +255,10 @@ def save_new_settings():
             "email_password": email_password,
             "port": port,
             "num_of_pics": num_of_pics,
-            "recording_fps": recording_fps,
-            "recording_resolution": recording_resolution
+            "system_password": system_password
         }
         with open("/Users/sreekarpalla/IdeaProjects/DormSecurity/Settings/settings.json", "w") as f:
-            json.dump(data, f)
+            json.dump(data, f, indent=2)
         f.close()
         notification = "New settings saved."
         return redirect(url_for("index", notification_message=notification))
